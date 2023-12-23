@@ -1,9 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import {
-  UserContextValue,
-  contextType,
-  userType,
-} from "../data/dto/context.ts";
+import { UserContextValue, userType } from "../data/dto/context.ts";
+import ChildrenProps from "../data/dto/childrenProps.ts";
 
 const userContext = createContext<UserContextValue>({
   user: null,
@@ -12,7 +9,7 @@ const userContext = createContext<UserContextValue>({
   setTokenToLocal: () => {},
 });
 
-const ContextProvider: React.FC<contextType> = ({ children }) => {
+const ContextProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [user, setUser] = useState<userType | null>(null);
   const [token, setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
 

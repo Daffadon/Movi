@@ -13,12 +13,16 @@ const Navbar = () => {
           />
         </Link>
         <div className="flex gap-5">
-          <p className="font-semibold hover:text-yellow-500 cursor-pointer duration-150 opacity-100 text-white">
-            Login
-          </p>
-          <p className="font-semibold hover:text-yellow-500 cursor-pointer duration-150 opacity-100 text-white">
-            Register
-          </p>
+          <Link to={"/login"}>
+            <p className="font-semibold hover:text-yellow-500 cursor-pointer duration-150 opacity-100 text-white">
+              Login
+            </p>
+          </Link>
+          <Link to={"/register"}>
+            <p className="font-semibold hover:text-yellow-500 cursor-pointer duration-150 opacity-100 text-white">
+              Register
+            </p>
+          </Link>
         </div>
       </div>
     </header>

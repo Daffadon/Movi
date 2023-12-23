@@ -1,9 +1,3 @@
-import React from "react";
-
-export interface contextType {
-  children: React.ReactNode;
-}
-
 export interface userType {
   name: string;
   role: string;

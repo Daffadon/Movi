@@ -44,7 +44,7 @@ const Landing = () => {
             </p>
             <div className="flex justify-center">
               <Link to={"/login"}>
-                <p className="mt-10 bg-white w-max px-5 py-2 rounded-md text-lg text-black  hover:bg-black hover:text-yellow-500 duration-200 cursor-pointer">
+                <p className="mt-10 bg-white  w-max px-5 py-2 rounded-md text-lg text-black hover:bg-black hover:text-yellow-500 duration-200 cursor-pointer">
                   Get Started
                 </p>
               </Link>
