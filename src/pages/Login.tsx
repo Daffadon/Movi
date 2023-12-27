@@ -41,10 +41,10 @@ const Login = () => {
       <img
         src={bg}
         alt="background"
-        className="max-h-screen w-full absolute left-0 top-0 -z-10"
+        className="max-h-screen h-screen w-full absolute left-0 top-0 -z-10"
       />
-      <div className="flex justify-end text-white">
-        <div className="w-1/3 mt-5">
+      <div className="flex justify-end text-white h-screen">
+        <div className="w-1/3 mt-5 h-5/6">
           <div className="flex items-center gap-3">
             <div
               className="text-2xl cursor-pointer hover:text-yellow-500 duration-200"
@@ -58,7 +58,7 @@ const Login = () => {
           </div>
           <form
             onSubmit={loginHandler}
-            className="pt-32 flex flex-col justify-center items-center"
+            className="h-full flex flex-col justify-center items-center"
           >
             <img src={logo} alt="Logo" className="w-8 h-8 mb-8" />
             <div className="w-3/5">

@@ -5,6 +5,7 @@ import Login from "../pages/Login.tsx";
 import NotFound from "../pages/NotFound.tsx";
 import PublicRoute from "./visibility/PublicRoute.tsx";
 import PrivateRoute from "./visibility/PrivateRoute.tsx";
+import Home from "../pages/Home.tsx";
 const createRouter = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const createRouter = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/home",
+        element: <Home />,
       },
     ],
   },
