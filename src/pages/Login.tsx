@@ -1,22 +1,21 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import bg from "../assets/collage.png";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "/M.svg";
 import { RxArrowLeft } from "react-icons/rx";
-import { useQuery } from "@tanstack/react-query";
-import { axiosClient } from "../middleware/axios-client";
 import { useUserContext } from "../context/userContext";
-
-const Login = () => {
+import { loginService } from "../api/authentication";
+import Loading from "../components/Loading";
+import Button from "../components/Button";
+const Login: React.FC = () => {
+  const { setTokenToLocal, setUser } = useUserContext();
   const navigate = useNavigate();
 
   const [form, setForm] = useState<LoginFormProps>({
     email: "",
     password: "",
   });
-  const [msg, setMsg] = useState<string>("");
-
   const setEmail = (e: React.FormEvent<HTMLInputElement>) => {
     setForm({ ...form, email: e.currentTarget.value });
   };
@@ -25,17 +24,23 @@ const Login = () => {
     setForm({ ...form, password: e.currentTarget.value });
   };
 
-  // const { setTokenToLocal, setUser } = useUserContext();
+  const [msg, setMsg] = useState<string>("");
+  const { data, isLoading, error, refetch } = loginService(form);
 
-  const loginHandler = () => {
-    // const { data, isLoading, error } = useQuery({
-    //   queryKey: ["loginUser"],
-    //   queryFn: () =>
-    //     axiosClient.post("/login", { form }).then((res) => {
-    //       res.data;
-    //     }),
-    // });
+  if (isLoading) return <Loading />;
+  if (data) {
+    setUser(data.user);
+    setTokenToLocal(data.token);
+    navigate("/home");
+  }
+
+  const loginHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // refetch();
+    } catch (error) {}
   };
+
   return (
     <section className="relative">
       <img
@@ -72,12 +77,7 @@ const Login = () => {
                 type="password"
               />
             </div>
-            <button
-              type="submit"
-              className="mb-4 bg-yellow-500 w-3/5 py-1 rounded-md hover:bg-white border-yellow-500 hover:text-yellow-500 duration-200 font-semibold border-2 hover:border-yellow-500 hover:border-2"
-            >
-              Login
-            </button>
+            <Button type="submit" text="Login" style="mb-4 w-3/5" />
             <div className="text-xs">
               <span>
                 Don't have an Account yet?{" "}
@@ -89,7 +89,11 @@ const Login = () => {
                 </Link>
               </span>
             </div>
-            {msg && msg}
+            {msg && (
+              <p className="text-red-500 text-xs mt-1 text-center w-3/5">
+                {msg}
+              </p>
+            )}
           </form>
         </div>
       </div>

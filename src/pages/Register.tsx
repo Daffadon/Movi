@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import bg from "../assets/collage.png";
 import Input from "../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "/M.svg";
 import { RxArrowLeft } from "react-icons/rx";
-import { useQuery } from "@tanstack/react-query";
-import { axiosClient } from "../middleware/axios-client";
-import { useUserContext } from "../context/userContext";
+import { registerService } from "../api/authentication";
+import Loading from "../components/Loading";
+import Button from "../components/Button";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ const Register = () => {
     password: "",
     repassword: "",
   });
-  const [msg, setMsg] = useState<string>("");
 
   const setUsername = (e: React.FormEvent<HTMLInputElement>) => {
     setForm({ ...form, username: e.currentTarget.value });
@@ -34,17 +33,29 @@ const Register = () => {
     setForm({ ...form, repassword: e.currentTarget.value });
   };
 
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey: ["loginUser"],
-  //   queryFn: () =>
-  //     axiosClient.post("/login", { form }).then((res) => {
-  //       res.data;
-  //     }),
-  // });
+  const [msg, setMsg] = useState<string>("");
 
-  // const { setTokenToLocal, setUser } = useUserContext();
+  const { data, isLoading, error, refetch } = registerService(form);
 
-  const registerHandler = () => {};
+  if (isLoading) return <Loading />;
+  if (data) {
+    navigate("/login");
+  }
+
+  const registerHandler = (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      if (!form.email || !form.username || !form.password || !form.repassword) {
+        setMsg("Please Fill All of The Fields");
+        return;
+      }
+      if (form.password !== form.repassword) {
+        setMsg("Your Password doesn't match");
+        return;
+      }
+      refetch();
+    } catch (error) {}
+  };
   return (
     <section className="relative">
       <img
@@ -96,12 +107,7 @@ const Register = () => {
                 type="password"
               />
             </div>
-            <button
-              type="submit"
-              className="mb-4 bg-yellow-500 w-3/5 py-1 rounded-md hover:bg-white border-yellow-500 hover:text-yellow-500 duration-200 font-semibold border-2 hover:border-yellow-500 hover:border-2"
-            >
-              Register
-            </button>
+            <Button type="submit" text="Register" style="mb-4 w-3/5" />
             <div className="text-xs">
               <span>
                 Already have an Account?{" "}
@@ -113,7 +119,11 @@ const Register = () => {
                 </Link>
               </span>
             </div>
-            {msg && msg}
+            {msg && (
+              <p className="text-red-500 text-xs mt-1 text-center w-3/5">
+                {msg}
+              </p>
+            )}
           </form>
         </div>
       </div>
