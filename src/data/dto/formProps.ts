@@ -1,9 +1,9 @@
-interface LoginFormProps {
+export interface LoginFormProps {
   email?: string;
   password?: string;
 }
 
-interface RegisterFormProps {
+export interface RegisterFormProps {
   username?: string;
   email?: string;
   password?: string;

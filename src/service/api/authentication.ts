@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosClient } from "../middleware/axios-client";
-import { LoginResponse } from "../data/dto/responseProps";
+import { axiosClient } from "../../middleware/axios-client";
+import { LoginResponse } from "../../data/dto/responseProps";
 
 export const loginService = (form: LoginFormProps) => {
   return useQuery<LoginResponse, Error>({

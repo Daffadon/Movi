@@ -6,7 +6,12 @@ import NotFound from "../pages/NotFound.tsx";
 import PublicRoute from "./visibility/PublicRoute.tsx";
 import PrivateRoute from "./visibility/PrivateRoute.tsx";
 import Home from "../pages/Home.tsx";
+import Profile from "../pages/Profile.tsx";
 const createRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Landing />,
+  },
   {
     path: "/",
     element: <PublicRoute />,
@@ -26,6 +31,10 @@ const createRouter = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

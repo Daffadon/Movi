@@ -1,61 +1,29 @@
-import React, { useState } from "react";
 import bg from "../assets/collage.png";
 import Input from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "/M.svg";
 import { RxArrowLeft } from "react-icons/rx";
-import { registerService } from "../api/authentication";
-import Loading from "../components/Loading";
 import Button from "../components/Button";
+import { useRegisterForm } from "../hooks/useRegisterForm";
+import Loading from "../components/Loading";
 
 const Register = () => {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState<RegisterFormProps>({
-    username: "",
-    email: "",
-    password: "",
-    repassword: "",
-  });
-
-  const setUsername = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, username: e.currentTarget.value });
-  };
-
-  const setEmail = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, email: e.currentTarget.value });
-  };
-
-  const setPassword = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, password: e.currentTarget.value });
-  };
-  const setRepassword = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, repassword: e.currentTarget.value });
-  };
-
-  const [msg, setMsg] = useState<string>("");
-
-  const { data, isLoading, error, refetch } = registerService(form);
+  const {
+    msg,
+    form,
+    changeHandlerForm,
+    registerHandler,
+    isLoading,
+    data,
+    error,
+    navigate,
+  } = useRegisterForm();
 
   if (isLoading) return <Loading />;
   if (data) {
     navigate("/login");
   }
 
-  const registerHandler = (e: React.FormEvent) => {
-    try {
-      e.preventDefault();
-      if (!form.email || !form.username || !form.password || !form.repassword) {
-        setMsg("Please Fill All of The Fields");
-        return;
-      }
-      if (form.password !== form.repassword) {
-        setMsg("Your Password doesn't match");
-        return;
-      }
-      refetch();
-    } catch (error) {}
-  };
   return (
     <section className="relative">
       <img
@@ -85,26 +53,34 @@ const Register = () => {
               <Input
                 label={"Username"}
                 value={form.username}
-                onChange={setUsername}
+                onChange={changeHandlerForm}
+                name="username"
               />
             </div>
             <div className="w-3/5 mt-3">
-              <Input label={"Email"} value={form.email} onChange={setEmail} />
+              <Input
+                label={"Email"}
+                value={form.email}
+                onChange={changeHandlerForm}
+                name="email"
+              />
             </div>
             <div className="w-3/5 mt-3">
               <Input
                 label={"Password"}
                 value={form.password}
-                onChange={setPassword}
+                onChange={changeHandlerForm}
                 type="password"
+                name="password"
               />
             </div>
             <div className="w-3/5 mt-3 mb-5">
               <Input
                 label={"Retype Password"}
                 value={form.repassword}
-                onChange={setRepassword}
+                onChange={changeHandlerForm}
                 type="password"
+                name="repassword"
               />
             </div>
             <Button type="submit" text="Register" style="mb-4 w-3/5" />

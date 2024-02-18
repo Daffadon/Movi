@@ -5,12 +5,12 @@ import { CiBookmark } from "react-icons/ci";
 import { MdAccountCircle } from "react-icons/md";
 
 const Navbar = () => {
-  const { user } = useUserContext();
-  // const user = { name: "Daffa", saved: 9 };
+  // const { user } = useUserContext();
+  const user = { name: "Daffa", saved: 9 };
   return (
     <header className="sticky top-0 z-10 bg-transparent">
       <div className="flex h-[7vh] w-full justify-around items-center bg-black opacity-95 gap-5">
-        <Link to={"/"}>
+        <Link to={`${user ? "/home" : "/"}`}>
           <img
             src={logo}
             alt=""
@@ -39,7 +39,7 @@ const Navbar = () => {
               >
                 <CiBookmark />
                 <div className="h-5 w-5 bg-red-500 absolute -top-1 right-0 text-xs font-semibold rounded-full flex justify-center items-center">
-                  {/* {user.saved} */}
+                  {user.saved}
                 </div>
               </Link>
               <Link

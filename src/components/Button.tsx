@@ -1,10 +1,5 @@
 import React from "react";
-
-interface ButtonProps {
-  text: string;
-  type?: "submit" | "reset" | "button" | undefined;
-  style?: string;
-}
+import { ButtonProps } from "../data/dto/buttonProps";
 
 const Button: React.FC<ButtonProps> = ({ text, type, style }) => {
   return (

@@ -3,11 +3,20 @@ import React, { FC } from "react";
 interface InputProps {
   label?: string;
   value?: string;
+  name: string;
   type?: string;
+  placeHolder?: string;
   onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
-const Input: FC<InputProps> = ({ label, value, onChange, type }) => {
+const Input: FC<InputProps> = ({
+  label,
+  value,
+  onChange,
+  type,
+  placeHolder,
+  name,
+}) => {
   return (
     <div className="flex flex-col">
       <label
@@ -21,6 +30,8 @@ const Input: FC<InputProps> = ({ label, value, onChange, type }) => {
         onChange={onChange}
         type={type ? type : "text"}
         id={label}
+        name={name}
+        placeholder={placeHolder ?? label}
         className="text-black text-xs px-2 py-2 focus:outline-none rounded-md border-2 border-yellow-500"
       />
     </div>

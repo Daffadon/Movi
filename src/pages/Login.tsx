@@ -1,31 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import bg from "../assets/collage.png";
 import Input from "../components/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "/M.svg";
 import { RxArrowLeft } from "react-icons/rx";
-import { useUserContext } from "../context/userContext";
-import { loginService } from "../api/authentication";
-import Loading from "../components/Loading";
 import Button from "../components/Button";
+import Loading from "../components/Loading";
+import { useLoginForm } from "../hooks/useLoginForm";
+
 const Login: React.FC = () => {
-  const { setTokenToLocal, setUser } = useUserContext();
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState<LoginFormProps>({
-    email: "",
-    password: "",
-  });
-  const setEmail = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, email: e.currentTarget.value });
-  };
-
-  const setPassword = (e: React.FormEvent<HTMLInputElement>) => {
-    setForm({ ...form, password: e.currentTarget.value });
-  };
-
-  const [msg, setMsg] = useState<string>("");
-  const { data, isLoading, error, refetch } = loginService(form);
+  const {
+    setTokenToLocal,
+    setUser,
+    navigate,
+    form,
+    changeHandlerForm,
+    msg,
+    data,
+    isLoading,
+    error,
+    loginHandler,
+  } = useLoginForm();
 
   if (isLoading) return <Loading />;
   if (data) {
@@ -33,14 +28,6 @@ const Login: React.FC = () => {
     setTokenToLocal(data.token);
     navigate("/home");
   }
-
-  const loginHandler = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      // refetch();
-    } catch (error) {}
-  };
-
   return (
     <section className="relative">
       <img
@@ -67,14 +54,20 @@ const Login: React.FC = () => {
           >
             <img src={logo} alt="Logo" className="w-8 h-8 mb-8" />
             <div className="w-3/5">
-              <Input label={"Email"} value={form.email} onChange={setEmail} />
+              <Input
+                label={"Email"}
+                value={form.email}
+                onChange={changeHandlerForm}
+                name="email"
+              />
             </div>
             <div className="w-3/5 mt-3 mb-5">
               <Input
                 label={"Password"}
                 value={form.password}
-                onChange={setPassword}
+                onChange={changeHandlerForm}
                 type="password"
+                name="password"
               />
             </div>
             <Button type="submit" text="Login" style="mb-4 w-3/5" />
